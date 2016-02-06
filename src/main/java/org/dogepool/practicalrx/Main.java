@@ -65,13 +65,13 @@ public class Main {
         return args -> {
             User user = userService.getUser(0);
             //connect USER automatically
-            boolean connected = poolService.connectUser(user);
+            boolean connected = poolService.connectUser(user).toBlocking().first();
 
             //gather data
             List<UserStat> hashLadder = rankinService.getLadderByHashrate();
             List<UserStat> coinsLadder = rankinService.getLadderByCoins();
             String poolName = poolService.poolName();
-            int miningUserCount = poolService.miningUsers().size();
+            int miningUserCount = poolService.miningUsers().count().toBlocking().first();
             double poolRate = poolRateService.poolGigaHashrate();
 
             //display welcome screen in console

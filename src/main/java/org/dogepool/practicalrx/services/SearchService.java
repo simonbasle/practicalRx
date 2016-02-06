@@ -50,7 +50,7 @@ public class SearchService {
         int userListSize = allUsers.size();
         List<UserStat> result = new ArrayList<>(userListSize);
         for (User user : allUsers) {
-            long coins = coinService.totalCoinsMinedBy(user);
+            long coins = coinService.totalCoinsMinedBy(user).toBlocking().first();
             if (coins >= minCoins && (maxCoins < 0 || coins <= maxCoins)) {
                 result.add(new UserStat(user, -1d, coins));
             }

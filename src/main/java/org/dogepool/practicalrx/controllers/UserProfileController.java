@@ -57,10 +57,10 @@ public class UserProfileController {
                 String smallAvatarUrl = (String) avatarInfo.get("small");
 
                 //complete with other information
-                double hash = hashrateService.hashrateFor(user);
+                double hash = hashrateService.hashrateFor(user).toBlocking().first();
                 long rankByHash = rankingService.rankByHashrate(user);
                 long rankByCoins = rankingService.rankByCoins(user);
-                long coins = coinService.totalCoinsMinedBy(user);
+                long coins = coinService.totalCoinsMinedBy(user).toBlocking().first();
 
                 deferred.setResult(new UserProfile(user, hash, coins, avatarUrl, smallAvatarUrl, rankByHash, rankByCoins));
                 return deferred;
@@ -88,10 +88,10 @@ public class UserProfileController {
                 String smallAvatarUrl = (String) avatarInfo.get("small");
 
                 //complete with other information
-                double hash = hashrateService.hashrateFor(user);
+                double hash = hashrateService.hashrateFor(user).toBlocking().first();
                 long rankByHash = rankingService.rankByHashrate(user);
                 long rankByCoins = rankingService.rankByCoins(user);
-                long coins = coinService.totalCoinsMinedBy(user);
+                long coins = coinService.totalCoinsMinedBy(user).toBlocking().first();
 
                 UserProfile profile = new UserProfile(user, hash, coins, avatarUrl, smallAvatarUrl, rankByHash, rankByCoins);
                 MinerModel minerModel = new MinerModel();

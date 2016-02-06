@@ -31,8 +31,8 @@ public class StatService {
         int userListSize = allUsers.size();
         List<UserStat> result = new ArrayList<>(userListSize);
         for (User user : allUsers) {
-            double hashRateForUser = hashrateService.hashrateFor(user);
-            long coins = coinService.totalCoinsMinedBy(user);
+            double hashRateForUser = hashrateService.hashrateFor(user).toBlocking().first();
+            long coins = coinService.totalCoinsMinedBy(user).toBlocking().first();
             UserStat userStat = new UserStat(user, hashRateForUser, coins);
             result.add(userStat);
         }
