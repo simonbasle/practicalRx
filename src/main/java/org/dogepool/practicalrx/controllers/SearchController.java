@@ -20,7 +20,7 @@ public class SearchController {
 
     @RequestMapping("user/{pattern}")
     public List<User> searchByName(@PathVariable String pattern) {
-        return service.findByName(pattern);
+        return service.findByName(pattern).toList().toBlocking().first();
     }
 
     @RequestMapping("user/coins/{minCoins}")
@@ -30,6 +30,6 @@ public class SearchController {
 
     @RequestMapping("user/coins/{minCoins}/{maxCoins}")
     private List<UserStat> searchByCoins(@PathVariable long minCoins, @PathVariable long maxCoins) {
-        return service.findByCoins(minCoins, maxCoins);
+        return service.findByCoins(minCoins, maxCoins).toList().toBlocking().first();
     }
 }

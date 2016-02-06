@@ -27,7 +27,7 @@ public class StatService {
     private UserService userService;
 
     public List<UserStat> getAllStats() {
-        List<User> allUsers = userService.findAll();
+        List<User> allUsers = userService.findAll().toList().toBlocking().first();
         int userListSize = allUsers.size();
         List<UserStat> result = new ArrayList<>(userListSize);
         for (User user : allUsers) {
@@ -49,7 +49,7 @@ public class StatService {
         int potentiallyBadIndex = rng.nextInt(10);
         System.out.println("ELECTED: #" + potentiallyBadIndex);
 
-        List<User> allUsers = userService.findAll();
+        List<User> allUsers = userService.findAll().toList().toBlocking().first();
         return allUsers.get(potentiallyBadIndex);
     }
 }
