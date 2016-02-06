@@ -1,6 +1,5 @@
 package org.dogepool.practicalrx.services;
 
-import org.dogepool.practicalrx.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rx.Observable;

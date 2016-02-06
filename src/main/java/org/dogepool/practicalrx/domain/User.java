@@ -1,6 +1,5 @@
 package org.dogepool.practicalrx.domain;
 
-import com.couchbase.client.deps.com.fasterxml.jackson.databind.util.JSONPObject;
 import com.couchbase.client.java.document.json.JsonObject;
 
 public class User {

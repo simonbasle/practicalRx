@@ -1,8 +1,5 @@
 package org.dogepool.practicalrx.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.dogepool.practicalrx.domain.User;
 import org.dogepool.practicalrx.domain.UserStat;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -12,12 +12,10 @@ import org.dogepool.practicalrx.services.PoolRateService;
 import org.dogepool.practicalrx.services.PoolService;
 import org.dogepool.practicalrx.services.RankingService;
 import org.dogepool.practicalrx.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
@@ -80,18 +78,14 @@ public class Main {
             System.out.println(miningUserCount + " users currently mining, for a global hashrate of "
                     + poolRate + " GHash/s");
 
-            try {
-                Double dogeToDollar = exchangeRateService.dogeToCurrencyExchangeRate("USD").toBlocking().single();
-                System.out.println("1 DOGE = " + dogeToDollar + "$");
-            } catch (Exception e) {
-                System.out.println("1 DOGE = ??$, couldn't get the exchange rate - " + e);
-            }
-            try {
-                Double dogeToEuro =  exchangeRateService.dogeToCurrencyExchangeRate("EUR").toBlocking().single();
-                System.out.println("1 DOGE = " + dogeToEuro + "€");
-            } catch (Exception e) {
-                System.out.println("1 DOGE = ??€, couldn't get the exchange rate - " + e);
-            }
+            exchangeRateService.dogeToCurrencyExchangeRate("USD").subscribe(
+                    r -> System.out.println("1 DOGE = " + r + "$"),
+                    e -> System.out.println("1 DOGE = ??$, couldn't get the exchange rate - " + e)
+            );
+            exchangeRateService.dogeToCurrencyExchangeRate("EUR").subscribe(
+                    r -> System.out.println("1 DOGE = " + r + "€"),
+                    e -> System.out.println("1 DOGE = ??€, couldn't get the exchange rate - " + e)
+            );
 
             System.out.println("\n----- TOP 10 Miners by Hashrate -----");
             int count = 1;
