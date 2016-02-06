@@ -1,0 +1,53 @@
+#Change this to connect to the workshop's server
+#Note: you can change DB ip vs APIs ip independently below
+workshop.ip=127.0.0.1
+
+
+#DB Parameters
+##############
+#set to false to completely disable using DB
+store.enable=true
+#set to false to disable using a query to find all users
+store.enableFindAll=true
+#the IP of the database
+store.nodes=${workshop.ip}
+#the bucket to use and associated password
+store.bucket=default
+store.bucket.password=
+
+
+#REST Client Parameters
+#######################
+rest.client.readTimeoutMs=2000
+rest.client.connectTimeoutMs=800
+
+
+#External APIs Parameters
+#########################
+#the IP used by all external APIs
+externalApi.ip=${workshop.ip}
+
+#avatar API
+avatar.api.ip=${externalApi.ip}
+avatar.api.port=8071
+avatar.api.baseUrl=http://${avatar.api.ip}:${avatar.api.port}/avatar
+
+#doge to dollar rate API
+doge.api.ip=${externalApi.ip}
+doge.api.port=8072
+doge.api.baseUrl=http://${doge.api.ip}:${doge.api.port}
+
+#free currency to currency rate API
+exchange.free.api.ip=${externalApi.ip}
+exchange.free.api.port=8073
+exchange.free.api.baseUrl=http://${exchange.free.api.ip}:${exchange.free.api.port}
+
+#reliable currency to currency rate API
+exchange.nonfree.api.ip=${externalApi.ip}
+exchange.nonfree.api.port=8074
+exchange.nonfree.api.baseUrl=http://${exchange.nonfree.api.ip}:${exchange.nonfree.api.port}
+
+
+#Templating Parameters
+######################
+spring.velocity.properties.runtime.introspector.uberspect=org.dogepool.practicalrx.internal.config.VelocityPublicFieldUberspect

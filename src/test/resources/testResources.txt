@@ -1,0 +1,1 @@
+The src/test/resources folder should contain a copy of application.test that you edited in order for unit tests to run.
