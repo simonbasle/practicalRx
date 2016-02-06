@@ -10,6 +10,7 @@ import org.dogepool.practicalrx.domain.User;
 import org.dogepool.practicalrx.domain.UserStat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rx.Observable;
 
 /**
  * Service to get stats on the pool, like top 10 ladders for various criteria.
@@ -26,17 +27,14 @@ public class StatService {
     @Autowired
     private UserService userService;
 
-    public List<UserStat> getAllStats() {
-        List<User> allUsers = userService.findAll().toList().toBlocking().first();
-        int userListSize = allUsers.size();
-        List<UserStat> result = new ArrayList<>(userListSize);
-        for (User user : allUsers) {
-            double hashRateForUser = hashrateService.hashrateFor(user).toBlocking().first();
-            long coins = coinService.totalCoinsMinedBy(user).toBlocking().first();
-            UserStat userStat = new UserStat(user, hashRateForUser, coins);
-            result.add(userStat);
-        }
-        return result;
+    public Observable<UserStat> getAllStats() {
+        return userService.findAll()
+                .flatMap(u -> {
+                    Observable<Double> hr = hashrateService.hashrateFor(u);
+                    Observable<Long> co = coinService.totalCoinsMinedBy(u);
+
+                    return Observable.zip(hr, co, (rate, coin) -> new UserStat(u, rate, coin));
+                });
     }
 
     public LocalDateTime lastBlockFoundDate() {

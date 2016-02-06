@@ -51,7 +51,7 @@ public class RankingService {
     }
 
     protected Observable<UserStat> rankByHashrate() {
-        List<UserStat> result = statService.getAllStats();
+        List<UserStat> result = statService.getAllStats().toList().toBlocking().first();
         Collections.sort(result, (o1, o2) -> {
             double h1 = o1.hashrate;
             double h2 = o2.hashrate;
@@ -66,7 +66,7 @@ public class RankingService {
     }
 
     protected Observable<UserStat> rankByCoins() {
-        List<UserStat> result = statService.getAllStats();
+        List<UserStat> result = statService.getAllStats().toList().toBlocking().first();
         Collections.sort(result, (o1, o2) -> {
             long c1 = o1.totalCoinsMined;
             long c2 = o2.totalCoinsMined;

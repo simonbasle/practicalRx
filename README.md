@@ -8,7 +8,7 @@ The application is a `REST API`, based on `Spring Boot` and layered into `Contro
 
 > /!\ This project should only be cloned for the duration of the workshop. It can (and will) be recreated from [upstream](http://github.com/simonbasle/practicalRxOrigin) if feedback warrants it or new features are brought into the workshop. **Don't submit issues or PR here** but rather in the upstream [practicalRxOrigin repo](http://github.com/simonbasle/practicalRxOrigin).
 
-### You are now doing [step6](docs/step6.md)
+### You are now doing [step7](docs/step7.md)
 
 ## Pre-requisites
  * The workshop application assumes there is a machine running the [`practicalRxExternal` project](https://github.com/simonbasle/practicalRxExternal) (usually the workshop's presenter).
