@@ -1,13 +1,9 @@
 package org.dogepool.practicalrx.services;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.dogepool.practicalrx.domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rx.Observable;
 
@@ -28,20 +24,20 @@ public class PoolService {
     }
 
     public Observable<Boolean> connectUser(User user) {
-        return Observable.create(s -> {
+        return Observable.<Boolean>create(s -> {
             connectedUsers.add(user);
-            System.out.println(user.nickname + " connected");
             s.onNext(Boolean.TRUE);
             s.onCompleted();
-        });
+        })
+        .doOnNext(b -> System.out.println(user.nickname + " connected"));
     }
 
     public Observable<Boolean> disconnectUser(User user) {
-        return Observable.create(s -> {
+        return Observable.<Boolean>create(s -> {
             connectedUsers.remove(user);
-            System.out.println(user.nickname + " disconnected");
             s.onNext(Boolean.TRUE);
             s.onCompleted();
-        });
+        })
+        .doOnNext(b -> System.out.println(user.nickname + " disconnected"));
     }
 }
