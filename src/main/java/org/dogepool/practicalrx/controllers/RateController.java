@@ -20,7 +20,7 @@ public class RateController {
 
     @RequestMapping("{moneyTo}")
     public ExchangeRate rate(@PathVariable String moneyTo) {
-            Double exchange = service.dogeToCurrencyExchangeRate(moneyTo);
+        Double exchange = service.dogeToCurrencyExchangeRate(moneyTo).toBlocking().singleOrDefault(null);
         if (exchange == null) {
             throw new DogePoolException("Cannot find rate for " + moneyTo, Error.BAD_CURRENCY, HttpStatus.NOT_FOUND);
         }

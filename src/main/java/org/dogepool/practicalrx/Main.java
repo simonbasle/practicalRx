@@ -81,13 +81,13 @@ public class Main {
                     + poolRate + " GHash/s");
 
             try {
-                Double dogeToDollar = exchangeRateService.dogeToCurrencyExchangeRate("USD");
+                Double dogeToDollar = exchangeRateService.dogeToCurrencyExchangeRate("USD").toBlocking().single();
                 System.out.println("1 DOGE = " + dogeToDollar + "$");
             } catch (Exception e) {
                 System.out.println("1 DOGE = ??$, couldn't get the exchange rate - " + e);
             }
             try {
-                Double dogeToEuro =  exchangeRateService.dogeToCurrencyExchangeRate("EUR");
+                Double dogeToEuro =  exchangeRateService.dogeToCurrencyExchangeRate("EUR").toBlocking().single();
                 System.out.println("1 DOGE = " + dogeToEuro + "€");
             } catch (Exception e) {
                 System.out.println("1 DOGE = ??€, couldn't get the exchange rate - " + e);
