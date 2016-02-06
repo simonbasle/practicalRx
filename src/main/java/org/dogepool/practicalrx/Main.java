@@ -69,8 +69,8 @@ public class Main {
                 .toBlocking().first();
 
             //gather data
-            List<UserStat> hashLadder = rankinService.getLadderByHashrate();
-            List<UserStat> coinsLadder = rankinService.getLadderByCoins();
+            List<UserStat> hashLadder = rankinService.getLadderByHashrate().toList().toBlocking().first();
+            List<UserStat> coinsLadder = rankinService.getLadderByCoins().toList().toBlocking().first();
             String poolName = poolService.poolName();
             int miningUserCount = poolService.miningUsers().count().toBlocking().first();
             double poolRate = poolRateService.poolGigaHashrate().toBlocking().first();

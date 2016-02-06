@@ -58,8 +58,8 @@ public class UserProfileController {
 
                 //complete with other information
                 double hash = hashrateService.hashrateFor(user).toBlocking().first();
-                long rankByHash = rankingService.rankByHashrate(user);
-                long rankByCoins = rankingService.rankByCoins(user);
+                long rankByHash = rankingService.rankByHashrate(user).toBlocking().first();
+                long rankByCoins = rankingService.rankByCoins(user).toBlocking().first();
                 long coins = coinService.totalCoinsMinedBy(user).toBlocking().first();
 
                 deferred.setResult(new UserProfile(user, hash, coins, avatarUrl, smallAvatarUrl, rankByHash, rankByCoins));
@@ -89,8 +89,8 @@ public class UserProfileController {
 
                 //complete with other information
                 double hash = hashrateService.hashrateFor(user).toBlocking().first();
-                long rankByHash = rankingService.rankByHashrate(user);
-                long rankByCoins = rankingService.rankByCoins(user);
+                long rankByHash = rankingService.rankByHashrate(user).toBlocking().first();
+                long rankByCoins = rankingService.rankByCoins(user).toBlocking().first();
                 long coins = coinService.totalCoinsMinedBy(user).toBlocking().first();
 
                 UserProfile profile = new UserProfile(user, hash, coins, avatarUrl, smallAvatarUrl, rankByHash, rankByCoins);

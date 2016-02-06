@@ -40,12 +40,12 @@ public class PoolController {
 
     @RequestMapping("/ladder/hashrate")
     public List<UserStat> ladderByHashrate() {
-        return rankingService.getLadderByHashrate();
+        return rankingService.getLadderByHashrate().toList().toBlocking().first();
     }
 
     @RequestMapping("/ladder/coins")
     public List<UserStat> ladderByCoins() {
-        return rankingService.getLadderByCoins();
+        return rankingService.getLadderByCoins().toList().toBlocking().first();
     }
 
     @RequestMapping("/hashrate")
