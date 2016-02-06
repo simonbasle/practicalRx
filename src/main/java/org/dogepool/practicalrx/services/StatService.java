@@ -2,8 +2,6 @@ package org.dogepool.practicalrx.services;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.dogepool.practicalrx.domain.User;
@@ -37,17 +35,17 @@ public class StatService {
                 });
     }
 
-    public LocalDateTime lastBlockFoundDate() {
+    public Observable<LocalDateTime> lastBlockFoundDate() {
         Random rng = new Random(System.currentTimeMillis());
-        return LocalDateTime.now().minus(rng.nextInt(72), ChronoUnit.HOURS);
+        LocalDateTime date = LocalDateTime.now().minus(rng.nextInt(72), ChronoUnit.HOURS);
+        return Observable.just(date);
     }
 
-    public User lastBlockFoundBy() {
-        Random rng = new Random(System.currentTimeMillis());
-        int potentiallyBadIndex = rng.nextInt(10);
-        System.out.println("ELECTED: #" + potentiallyBadIndex);
-
-        List<User> allUsers = userService.findAll().toList().toBlocking().first();
-        return allUsers.get(potentiallyBadIndex);
+    public Observable<User> lastBlockFoundBy() {
+        final Random rng = new Random(System.currentTimeMillis());
+        return Observable.defer(() -> Observable.just(rng.nextInt(10)))
+                .doOnNext(i -> System.out.println("ELECTED: #" + i))
+                .flatMap(potentiallyBadIndex -> userService.findAll().elementAt(potentiallyBadIndex))
+                .retry();
     }
 }

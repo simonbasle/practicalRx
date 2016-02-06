@@ -79,12 +79,12 @@ public class PoolController {
 
     @RequestMapping("/lastblock")
     public Map<String, Object> lastBlock() {
-        LocalDateTime found = statService.lastBlockFoundDate();
+        LocalDateTime found = statService.lastBlockFoundDate().toBlocking().first();
         Duration foundAgo = Duration.between(found, LocalDateTime.now());
 
         User foundBy;
         try {
-            foundBy = statService.lastBlockFoundBy();
+            foundBy = statService.lastBlockFoundBy().toBlocking().first();
         } catch (IndexOutOfBoundsException e) {
             System.err.println("WARNING: StatService failed to return the last user to find a coin");
             foundBy = new User(-1, "BAD USER", "Bad User from StatService, please ignore", "", null);
