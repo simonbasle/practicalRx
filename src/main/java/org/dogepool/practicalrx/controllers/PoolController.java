@@ -51,7 +51,7 @@ public class PoolController {
     @RequestMapping("/hashrate")
     public Map<String, Object> globalHashRate() {
         Map<String, Object> json = new HashMap<>(2);
-        double ghashrate = poolRateService.poolGigaHashrate();
+        double ghashrate = poolRateService.poolGigaHashrate().toBlocking().first();
         if (ghashrate < 1) {
             json.put("unit", "MHash/s");
             json.put("hashrate", ghashrate * 100d);
